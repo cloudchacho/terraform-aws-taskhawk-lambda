@@ -39,7 +39,7 @@ Role policy should include:
       "SNS:Publish"
     ]
     resources = [
-      "arn:aws:sns:us-east-1:686176732873:taskhawk-dev-myapp*"
+      "arn:aws:sns:<YOUR-AWS-REGION>:<YOUR-AWS-ACCOUNT>:taskhawk-<NAME>*"
     ]
   }
 ```
