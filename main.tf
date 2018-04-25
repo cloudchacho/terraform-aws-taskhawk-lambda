@@ -73,3 +73,43 @@ resource "aws_lambda_permission" "allow_sns_bulk" {
   principal     = "sns.amazonaws.com"
   source_arn    = "${aws_sns_topic.sns_topic_bulk.arn}"
 }
+
+data "aws_iam_policy_document" "scheduler_policy_document" {
+  "statement" {
+    sid = "AllowCloudwatchRule"
+
+    actions = [
+      "sns:Publish",
+    ]
+
+    resources = [
+      "${aws_sns_topic.sns_topic_default.arn}",
+    ]
+
+    principals {
+      identifiers = [
+        "events.amazonaws.com",
+      ]
+
+      type = "Service"
+    }
+
+    condition {
+      test = "ArnEquals"
+
+      # use lower case by default since tf-generator would change case when creating rule name
+      values = [
+        "arn:aws:events:${var.aws_region}:${var.aws_account_id}:rule/taskhawk-${lower(var.name)}-*",
+      ]
+
+      variable = "aws:SourceArn"
+    }
+  }
+}
+
+resource "aws_sns_topic_policy" "default_topic_policy" {
+  count = "${var.enable_scheduler == "true" ? 1 : 0}"
+
+  policy = "${data.aws_iam_policy_document.scheduler_policy_document.json}"
+  arn    = "${aws_sns_topic.sns_topic_default.arn}"
+}

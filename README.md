@@ -19,6 +19,9 @@ module "taskhawk-dev-myapp" {
   function_name      = "${aws_lambda_function.dev-myFunction.function_name}"
   function_qualifier = "deployed"
   name               = "dev-myapp"
+  aws_region         = "us-east-1"
+  aws_account_id     = "12345678"
+  enable_scheduler   = true
 }
 ```
 
