@@ -1,7 +1,7 @@
 Taskhawk Lambda App Terraform module
 ====================================
 
-[Taskhawk](https://github.com/Automatic/taskhawk) is a replacement for celery that works on AWS SQS/SNS, while
+[Taskhawk](https://github.com/cloudchacho/taskhawk) is a replacement for celery that works on AWS SQS/SNS, while
 keeping things pretty simple and straight forward. 
 
 This module provides a custom [Terraform](https://www.terraform.io/) module for deploying Taskhawk infrastructure for 
@@ -14,7 +14,7 @@ resource "aws_lambda_function" "dev-myFunction" {
 }
 
 module "taskhawk-dev-myapp" {
-  source             = "Automatic/taskhawk-lambda/aws"
+  source             = "cloudchacho/taskhawk-lambda/aws"
   function           = "${aws_lambda_function.dev-myFunction.arn}"
   function_name      = "${aws_lambda_function.dev-myFunction.function_name}"
   function_qualifier = "deployed"
@@ -49,8 +49,8 @@ Role policy should include:
 
 ## Release Notes
 
-[Github Releases](https://github.com/Automatic/terraform-aws-taskhawk-lambda/releases)
+[Github Releases](https://github.com/cloudchacho/terraform-aws-taskhawk-lambda/releases)
 
 ## How to publish
 
-Go to [Terraform Registry](https://registry.terraform.io/modules/Automatic/taskhawk-lambda/aws), and Resync module.
+Go to [Terraform Registry](https://registry.terraform.io/modules/cloudchacho/taskhawk-lambda/aws), and Resync module.
